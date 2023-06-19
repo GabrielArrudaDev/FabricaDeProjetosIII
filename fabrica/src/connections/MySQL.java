@@ -5,13 +5,12 @@
  * and open the template in the editor.
  */
 package connections;
-
+import connections.MySQL;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.mysql.jdbc.Driver;
 /**
  *
  * @author Macrr
@@ -24,7 +23,7 @@ public class MySQL {
     private ResultSet resultSet;
     
     private String servidor = "localhost:3306";
-    private String nomeDoBanco = "petshop";
+    private String nomeDoBanco = "salao";
     private String usuario = "root";
     private String senha = "123456";
     
