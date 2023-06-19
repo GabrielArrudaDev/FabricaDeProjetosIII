@@ -25,7 +25,7 @@ public class TabelaCliente {
     ArrayList<Agendamento> lista = new ArrayList<>();
     
    public ArrayList<Agendamento> PesquisarAgendamento(){
-       String sql = "select * from agendamento";
+       String sql = "select * from cliente";
        this.conectar.conectaBanco();
        conn = conectar.getConn();
        try {
@@ -36,7 +36,11 @@ public class TabelaCliente {
                Agendamento agend = new Agendamento();
                agend.setNome(rs.getString("nome"));  
                agend.setCpf(rs.getString("cpf"));
+               agend.setIdade(rs.getString("idade"));
                agend.setTelefone(rs.getString("telefone"));
+               agend.setEndereco(rs.getString("endereco"));
+               agend.setGenero(rs.getString("genero"));
+
                lista.add(agend);
            }
        } catch(SQLException erro) {

@@ -18,5 +18,11 @@ agenda varchar(45),
 cpf varchar(45) not null 
 );
 
+create table cliente(
+nome varchar(45),
+telefone varchar(45),
+cpf varchar(45) not null 
+);
+
 
 

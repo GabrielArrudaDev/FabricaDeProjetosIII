@@ -41,6 +41,7 @@ public class TabelaAgendamento extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         btn_agendamento1 = new javax.swing.JButton();
@@ -65,15 +66,16 @@ public class TabelaAgendamento extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Telefone", "Serviço", "Horário", "Valor", "Data",
+                "Nome", "CPF", "Serviço", "Horário",  "Valor", "Data"
             }
         ));
         jTable1.setSelectionBackground(new java.awt.Color(153, 153, 153));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 550));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 540));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 780, 620));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 780, 600));
 
         jPanel3.setBackground(new java.awt.Color(240, 140, 23));
         jPanel3.setLayout(null);
@@ -161,13 +163,13 @@ public class TabelaAgendamento extends javax.swing.JFrame {
         jPanel3.add(btn_agenda6);
         btn_agenda6.setBounds(0, 290, 220, 48);
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 620));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_agendamento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agendamento1ActionPerformed
-        CadastrarAgendamento agendament = new CadastrarAgendamento();
+        CadastrarCliente agendament = new CadastrarCliente();
         agendament.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_agendamento1ActionPerformed
@@ -185,7 +187,7 @@ public class TabelaAgendamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_agenda4ActionPerformed
 
     private void btn_agenda5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agenda5ActionPerformed
-        Login agend = new Login();
+        login agend = new login();
         agend.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_agenda5ActionPerformed
@@ -239,6 +241,7 @@ public class TabelaAgendamento extends javax.swing.JFrame {
     private javax.swing.JButton btn_agenda6;
     private javax.swing.JButton btn_agendamento1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
@@ -257,11 +260,12 @@ public class TabelaAgendamento extends javax.swing.JFrame {
                 model.addRow(new Object[]{
                     lista.get(num).getNome(),
                     lista.get(num).getCpf(),
-                    lista.get(num).getTelefone(),
-                    lista.get(num).getServico(),                    
-                    lista.get(num).getHora(),
+                    lista.get(num).getServico(),  
+                    lista.get(num).getHora(), 
                     lista.get(num).getValor(),
                     lista.get(num).getAgenda()
+                    
+                    
                 });
             }
         } catch (Exception erro) {

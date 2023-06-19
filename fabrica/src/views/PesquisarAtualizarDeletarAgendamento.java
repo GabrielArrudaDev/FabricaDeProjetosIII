@@ -35,30 +35,32 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
         this.conectar.executarSQL("SELECT "
             + "nome,"
             + "telefone,"
-            + "servico,"
-            + "hora,"
-            + "valor,"
-            + "agenda,"
+            + "endereco,"
+            + "genero,"
+            + "idade,"
             + "cpf"
             + " FROM"
-            + " agendamento"
+            + " cliente"
             + " WHERE"
             + " cpf = '" + pesquisaNewAgendamento + "'" + ";"
+           
                 
         );
+        
+       
         while (this.conectar.getResultSet().next()){
             novoAgendamento.setNome(this.conectar.getResultSet().getString(1));
             novoAgendamento.setTelefone(this.conectar.getResultSet().getString(2));
-            novoAgendamento.setServico(this.conectar.getResultSet().getString(3));
-            novoAgendamento.setHora(this.conectar.getResultSet().getString(4));
-            novoAgendamento.setValor(this.conectar.getResultSet().getString(5));
-            novoAgendamento.setAgenda(this.conectar.getResultSet().getString(6));
-            novoAgendamento.setCpf(this.conectar.getResultSet().getString(7));
+            novoAgendamento.setEndereco(this.conectar.getResultSet().getString(3));
+            novoAgendamento.setGenero(this.conectar.getResultSet().getString(4));
+            novoAgendamento.setIdade(this.conectar.getResultSet().getString(5));
+            novoAgendamento.setCpf(this.conectar.getResultSet().getString(6));
             
         }
+        
          
        if(novoAgendamento.getCpf()==null)
-            JOptionPane.showMessageDialog(null, "Erro ao buscar funcionário!");
+            JOptionPane.showMessageDialog(null, "Erro ao buscar cliente!");
         } catch (Exception e){
             
             
@@ -67,10 +69,59 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
             
             txt_nome.setText(novoAgendamento.getNome());
             txt_telefone.setText(novoAgendamento.getTelefone());
+            txt_endereco.setText(novoAgendamento.getEndereco());
+            cmb_genero.setSelectedItem(novoAgendamento.getGenero());
+            cmb_idade.setSelectedItem(novoAgendamento.getIdade());
+            txt_cpf.setText(novoAgendamento.getCpf());
+
+            this.conectar.fechaBanco();
+            
+                
+        } 
+        this.conectar.conectaBanco();
+        
+        String pesquisaNewAgendamento1 = txt_cpf.getText();
+        try{
+        this.conectar.executarSQL("SELECT "
+            + "nome,"
+            + "cpf,"
+            + "servico,"
+            + "hora,"
+            + "valor,"
+            + "agenda"
+            + " FROM"
+            + " agendamento"
+            + " WHERE"
+            + " cpf = '" + pesquisaNewAgendamento + "'" + ";"
+           
+                
+        );
+        
+       
+        while (this.conectar.getResultSet().next()){
+            novoAgendamento.setNome(this.conectar.getResultSet().getString(1));
+            novoAgendamento.setCpf(this.conectar.getResultSet().getString(2));
+            novoAgendamento.setServico(this.conectar.getResultSet().getString(3));
+            novoAgendamento.setHora(this.conectar.getResultSet().getString(4));
+            novoAgendamento.setValor(this.conectar.getResultSet().getString(5));
+            novoAgendamento.setAgenda(this.conectar.getResultSet().getString(6));
+            
+        }
+        
+         
+       if(novoAgendamento.getCpf()==null)
+            JOptionPane.showMessageDialog(null, "Erro ao buscar cliente!");
+        } catch (Exception e){
+            
+            
+            
+        } finally{
+            
+            txt_nome.setText(novoAgendamento.getNome());
+            txt_cpf.setText(novoAgendamento.getCpf());
             txt_servico.setSelectedItem(novoAgendamento.getServico());
             cmb_hora.setSelectedItem(novoAgendamento.getHora());
             txt_valor.setSelectedItem(novoAgendamento.getValor());
-            txt_agenda.setText(novoAgendamento.getAgenda());
             txt_cpf.setText(novoAgendamento.getCpf());
 
             this.conectar.fechaBanco();
@@ -109,6 +160,9 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
             txt_valor.setSelectedItem("");
             txt_agenda.setText("");
             txt_cpf.setText("");
+            cmb_genero.setSelectedItem("");
+            cmb_idade.setSelectedItem("");
+            txt_endereco.setText("");
             novoAgendamento.setNome("");
             novoAgendamento.setTelefone("");
             novoAgendamento.setServico("");
@@ -116,6 +170,9 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
             novoAgendamento.setValor("");
             novoAgendamento.setAgenda("");
             novoAgendamento.setCpf("");
+            novoAgendamento.setGenero("");
+            novoAgendamento.setIdade("");
+            novoAgendamento.setEndereco("");
 
             this.conectar.fechaBanco();
             JOptionPane.showMessageDialog(null, "Agendamento e Usuario Deletado!");
@@ -137,24 +194,36 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
                    e.printStackTrace();
                }
             novoAgendamento.setNome(txt_nome.getText());
-            novoAgendamento.setTelefone(txt_telefone.getText());
+            novoAgendamento.setCpf(txt_cpf.getText());
             novoAgendamento.setServico((String)txt_servico.getSelectedItem());
             novoAgendamento.setHora((String)cmb_hora.getSelectedItem());
             novoAgendamento.setValor((String)txt_valor.getSelectedItem());
             novoAgendamento.setAgenda(data.format(d));
-        try{
+            try{
+            this.conectar.insertSQL("INSERT INTO agendamento("
+            + "nome,"
+            + "cpf,"
+            + "servico,"
+            + "hora,"
+            + "valor,"
+            + "agenda"
+            + ")VALUES("
+            + "'" +novoAgendamento.getNome()+"',"
+            + "'" +novoAgendamento.getCpf()+"',"
+            + "'" +novoAgendamento.getServico()+"',"
+            + "'" +novoAgendamento.getHora()+ "',"
+            + "'" +novoAgendamento.getValor()+ "',"
+            + "'" +novoAgendamento.getAgenda()+ "'" 
+            + ");");
+
             this.conectar.updateSQL(
             " UPDATE agendamento SET "
-            + " nome = '" + novoAgendamento.getNome()+"'"
-            + ", telefone = '" + novoAgendamento.getTelefone()+"'"
-            + ", servico = '" + novoAgendamento.getServico()+"'"
+            + " servico = '" + novoAgendamento.getServico()+"'"
             + ", hora = '" + novoAgendamento.getHora()+"'"
             + ", valor = '" + novoAgendamento.getValor()+"'"
             + ", agenda = '" + novoAgendamento.getAgenda()+"'"
-            + ", cpf = '" + novoAgendamento.getCpf()+"'"
-            + " WHERE"
-            + " cpf = '"+ pesquisaNewAgendamento + "'" + ";"
             );
+              
         }catch(Exception e){
             System.out.println("Erro ao atualizar agendamento" + e.getMessage());
             JOptionPane.showMessageDialog(null, "Erro ao atualizar agendamento");
@@ -162,6 +231,37 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
         }finally{
             this.conectar.fechaBanco();
             JOptionPane.showMessageDialog(null, "Agendamento atualizado!");
+        }   
+    }
+        
+    private void atualizaAgendamento1(Agendamento novoAgendamento ){
+        this.conectar.conectaBanco();
+
+        String pesquisaNewAgendamento = this.txt_cpf.getText();
+            novoAgendamento.setNome(txt_nome.getText());
+            novoAgendamento.setTelefone(txt_telefone.getText());
+            novoAgendamento.setEndereco(txt_endereco.getText());
+            novoAgendamento.setGenero((String)cmb_genero.getSelectedItem());
+            novoAgendamento.setIdade((String)cmb_idade.getSelectedItem());
+            novoAgendamento.setCpf(txt_cpf.getText());
+            
+            try{
+            this.conectar.updateSQL(
+            " UPDATE cliente SET "
+            + " nome = '" + novoAgendamento.getNome()+"'"
+            + ", telefone = '" + novoAgendamento.getTelefone()+"'"
+            + ", endereco = '" + novoAgendamento.getEndereco()+"'"
+            + ", genero = '" + novoAgendamento.getGenero()+"'"
+            + ", idade = '" + novoAgendamento.getIdade()+"'"
+            + ", cpf = '" + novoAgendamento.getCpf()+"'"
+            + " WHERE"
+            + " cpf = '"+ pesquisaNewAgendamento + "'" + ";"
+            );
+        }catch(Exception e){
+       
+        }finally{
+            this.conectar.fechaBanco();
+            
         }    
 
     }
@@ -195,6 +295,12 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
         txt_cpf = new javax.swing.JFormattedTextField();
         jCalendar1 = new com.toedter.calendar.JCalendar();
         txt_valor = new javax.swing.JComboBox<>();
+        txt_endereco = new javax.swing.JTextField();
+        jLabel_Servico = new javax.swing.JLabel();
+        cmb_genero = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        cmb_idade = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(984, 618));
@@ -296,7 +402,7 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
         btn_altera.setBackground(new java.awt.Color(0, 102, 0));
         btn_altera.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_altera.setForeground(new java.awt.Color(255, 255, 255));
-        btn_altera.setText("Alterar");
+        btn_altera.setText("Cadastrar");
         btn_altera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_alteraActionPerformed(evt);
@@ -333,15 +439,15 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Serviço:");
+        jLabel4.setText("Idade:");
         jPanel2.add(jLabel4);
-        jLabel4.setBounds(40, 230, 80, 16);
+        jLabel4.setBounds(40, 360, 80, 16);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Valor:");
         jPanel2.add(jLabel8);
-        jLabel8.setBounds(40, 300, 100, 16);
+        jLabel8.setBounds(520, 360, 100, 16);
 
         txt_agenda.setEnabled(false);
         txt_agenda.addActionListener(new java.awt.event.ActionListener() {
@@ -397,7 +503,7 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
 
         txt_servico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cabelo Masculino", "Pezinho", "Barba", "Cabelo Masculino & Barba", "Barba & Pezinho", "Cabelo Feminino", "Sobrancelha", "Cilios", "Cabelo F & Sobrancelha", "Cabelo F & Cilios", "Cabelo F & Sobrancelha & Cilios", "Sobrancelha & Cilios" }));
         jPanel2.add(txt_servico);
-        txt_servico.setBounds(40, 250, 230, 30);
+        txt_servico.setBounds(300, 380, 200, 30);
 
         try {
             txt_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
@@ -428,7 +534,53 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
             }
         });
         jPanel2.add(txt_valor);
-        txt_valor.setBounds(40, 320, 230, 30);
+        txt_valor.setBounds(520, 380, 200, 30);
+        jPanel2.add(txt_endereco);
+        txt_endereco.setBounds(40, 260, 230, 30);
+
+        jLabel_Servico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel_Servico.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_Servico.setText("Endereço:");
+        jPanel2.add(jLabel_Servico);
+        jLabel_Servico.setBounds(40, 240, 70, 20);
+
+        cmb_genero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
+        cmb_genero.setFocusable(false);
+        cmb_genero.setLightWeightPopupEnabled(false);
+        cmb_genero.setRequestFocusEnabled(false);
+        cmb_genero.setVerifyInputWhenFocusTarget(false);
+        cmb_genero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_generoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cmb_genero);
+        cmb_genero.setBounds(40, 320, 230, 30);
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Serviço:");
+        jPanel2.add(jLabel5);
+        jLabel5.setBounds(300, 360, 80, 16);
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Gênero:");
+        jPanel2.add(jLabel6);
+        jLabel6.setBounds(40, 300, 80, 16);
+
+        cmb_idade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67", "68", "69", "70", "71", "72", "73", "74", "75", "76", "77", "78", "79", "80", "81", "82", "83", "84", "85", "86", "87", "88", "89", "90", "91", "92", "93", "94", "95", "96", "97", "98", "99", "100", "101", "102", "103", "104", "105", "106", "107", "108", "109", "110", "111", "112", "113", "114", "115", "116", "117", "118", "119", "120" }));
+        cmb_idade.setFocusable(false);
+        cmb_idade.setLightWeightPopupEnabled(false);
+        cmb_idade.setRequestFocusEnabled(false);
+        cmb_idade.setVerifyInputWhenFocusTarget(false);
+        cmb_idade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_idadeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cmb_idade);
+        cmb_idade.setBounds(40, 380, 230, 30);
 
         getContentPane().add(jPanel2);
         jPanel2.setBounds(220, 0, 770, 590);
@@ -437,7 +589,7 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_agendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agendamentoActionPerformed
-       CadastrarAgendamento agendament = new CadastrarAgendamento();
+       CadastrarCliente agendament = new CadastrarCliente();
        agendament.setVisible(true);
        dispose();
     }//GEN-LAST:event_btn_agendamentoActionPerformed
@@ -445,6 +597,7 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
     private void btn_alteraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alteraActionPerformed
         DateFormat teste = new SimpleDateFormat("dd/MM/yyyy" );
         atualizaAgendamento(novoAgendamento);
+        atualizaAgendamento1(novoAgendamento);
 
         Date dl = null;
         try{
@@ -487,7 +640,7 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_agenda2ActionPerformed
 
     private void btn_agenda3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agenda3ActionPerformed
-        Login agend = new Login();
+        login agend = new login();
         agend.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_agenda3ActionPerformed
@@ -501,6 +654,14 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
         agend.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_agenda6ActionPerformed
+
+    private void cmb_generoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_generoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_generoActionPerformed
+
+    private void cmb_idadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_idadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_idadeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -549,7 +710,9 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
     private javax.swing.JButton btn_altera;
     private javax.swing.JButton btn_deleta;
     private javax.swing.JButton btn_pesquisa;
+    private javax.swing.JComboBox<String> cmb_genero;
     private javax.swing.JComboBox<String> cmb_hora;
+    private javax.swing.JComboBox<String> cmb_idade;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -557,12 +720,16 @@ public class PesquisarAtualizarDeletarAgendamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel_Servico;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txt_agenda;
     private javax.swing.JFormattedTextField txt_cpf;
+    private javax.swing.JTextField txt_endereco;
     private javax.swing.JTextField txt_nome;
     private javax.swing.JComboBox<String> txt_servico;
     private javax.swing.JFormattedTextField txt_telefone;

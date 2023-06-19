@@ -35,12 +35,12 @@ public class TabelaAgenda {
            while(rs.next()){
                Agendamento agend = new Agendamento();
                agend.setNome(rs.getString("nome"));  
-               agend.setCpf(rs.getString("cpf"));
-               agend.setTelefone(rs.getString("telefone"));
+               agend.setCpf(rs.getString("cpf"));  
                agend.setServico(rs.getString("servico"));
                agend.setHora(rs.getString("hora"));
                agend.setValor(rs.getString("valor"));
                agend.setAgenda(rs.getString("agenda"));
+               
                
                lista.add(agend);
            }

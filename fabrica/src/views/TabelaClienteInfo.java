@@ -65,7 +65,7 @@ public class TabelaClienteInfo extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Telefone"
+                "Nome", "CPF", "Idade", "Telefone", "Endereço",  "Gênero"
             }
         ));
         jTable1.setSelectionBackground(new java.awt.Color(153, 153, 153));
@@ -167,7 +167,7 @@ public class TabelaClienteInfo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_agendamento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agendamento1ActionPerformed
-        CadastrarAgendamento agendament = new CadastrarAgendamento();
+        CadastrarCliente agendament = new CadastrarCliente();
         agendament.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_agendamento1ActionPerformed
@@ -185,7 +185,7 @@ public class TabelaClienteInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_agenda4ActionPerformed
 
     private void btn_agenda5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_agenda5ActionPerformed
-        Login agend = new Login();
+        login agend = new login();
         agend.setVisible(true);
         dispose();
     }//GEN-LAST:event_btn_agenda5ActionPerformed
@@ -256,7 +256,10 @@ private void listarValores(){
                 model.addRow(new Object[]{
                     lista.get(num).getNome(),
                     lista.get(num).getCpf(),
+                    lista.get(num).getIdade(),
                     lista.get(num).getTelefone(),
+                    lista.get(num).getEndereco(),
+                    lista.get(num).getGenero(),
                 });
             }
         } catch (Exception erro) {

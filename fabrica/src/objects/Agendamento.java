@@ -14,6 +14,9 @@ public class Agendamento {
     
     String nome;
     String telefone;
+    String endereco;
+    String genero;
+    String idade;
     String hora;
     String servico;
     String agenda;
@@ -80,6 +83,30 @@ public class Agendamento {
 
     public void setValor(String valor) {
         this.valor = valor;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String Endereco) {
+        this.endereco = Endereco;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getIdade() {
+        return idade;
+    }
+
+    public void setIdade(String idade) {
+        this.idade = idade;
     }
     
 }
